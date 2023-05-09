@@ -1,7 +1,7 @@
 // Types in this file are exported outside of the @cosmjs/tendermint-rpc package,
 // e.g. as part of a request or response
 
-import { ReadonlyDateWithNanoseconds } from "./dates";
+import {ReadonlyDateWithNanoseconds} from "./dates";
 
 export interface ValidatorEd25519Pubkey {
   readonly algorithm: "ed25519";
@@ -13,10 +13,15 @@ export interface ValidatorSecp256k1Pubkey {
   readonly data: Uint8Array;
 }
 
+export interface ValidatorBls12377PubKey {
+  readonly algorithm: "bls12377";
+  readonly data: Uint8Array;
+}
+
 /**
  * Union type for different possible pubkeys.
  */
-export type ValidatorPubkey = ValidatorEd25519Pubkey | ValidatorSecp256k1Pubkey;
+export type ValidatorPubkey = ValidatorEd25519Pubkey | ValidatorSecp256k1Pubkey | ValidatorBls12377PubKey;
 
 export enum BlockIdFlag {
   Unknown = 0,
