@@ -16,6 +16,7 @@ export { Ripemd160, ripemd160 } from "./ripemd";
 export { Secp256k1, Secp256k1Keypair } from "./secp256k1";
 export { Secp256r1, Secp256r1Keypair } from "./secp256r1";
 export { ExtendedSecp256k1Signature, Secp256k1Signature } from "./secp256k1signature";
+export { ExtendedSecp256r1Signature, Secp256r1Signature } from "./secp256r1signature";
 export { Sha256, sha256, Sha512, sha512 } from "./sha";
 export {
   HdPath,

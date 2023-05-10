@@ -35,7 +35,7 @@ export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
  */
 export function encodeSecp256r1Pubkey(pubkey: Uint8Array): Secp256r1Pubkey {
   if (pubkey.length !== 33) {
-    throw new Error("Public key must be compressed secp256r1, i.e. 33 bytes starting with 0x02 or 0x03");
+    throw new Error("Public key must be compressed secp256r1, i.e. 33 bytes");
   }
   return {
     type: pubkeyType.ksecp256r1,
