@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/stream",
-  "version": "0.30.1",
+  "version": "0.30.5",
   "description": "Utility functions for producing and consuming streams",
   "contributors": [
     "IOV SAS <admin@iov.one>",
