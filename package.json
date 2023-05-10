@@ -36,7 +36,7 @@
     "build": "yarn workspaces foreach --topological-dev --parallel --verbose run build",
     "docs": "yarn workspaces foreach --topological-dev --parallel --verbose run docs",
     "pack-web": "yarn workspaces foreach --topological-dev --parallel --verbose run pack-web",
-    "publish-next": "yarn workspaces foreach --no-private exec yarn npm publish --tag next",
+    "publish-next": "yarn workspaces foreach --no-private exec yarn npm publish --access public --tag next",
     "publish-latest": "yarn workspaces foreach --no-private exec yarn npm publish"
   },
   "devDependencies": {
@@ -52,6 +52,7 @@
   },
   "packageManager": "yarn@3.5.1",
   "dependencies": {
-    "@types/mocha": "^10.0.1"
+    "@types/mocha": "^10.0.1",
+    "packages": "^0.0.8"
   }
 }

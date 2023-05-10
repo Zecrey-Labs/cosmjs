@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/socket",
-  "version": "0.30.5",
+  "version": "0.30.8",
   "description": "Utility functions for working with WebSockets",
   "contributors": [
     "IOV SAS <admin@iov.one>",

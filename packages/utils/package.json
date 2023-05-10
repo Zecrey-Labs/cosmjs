@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/utils",
-  "version": "0.30.5",
+  "version": "0.30.8",
   "description": "Utility tools, primarily for testing code",
   "contributors": [
     "IOV SAS <admin@iov.one>"

@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/stargate",
-  "version": "0.30.5",
+  "version": "0.30.8",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"

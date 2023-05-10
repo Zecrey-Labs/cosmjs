@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/cli",
-  "version": "0.30.5",
+  "version": "0.30.8",
   "description": "Command line interface",
   "contributors": [
     "IOV SAS <admin@iov.one>",

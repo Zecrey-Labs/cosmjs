@@ -39,7 +39,7 @@ export function encodePubkey(pubkey: Pubkey): Any {
       key: fromBase64(pubkey.value),
     });
     return Any.fromPartial({
-      typeUrl: "/cosmos.crypto.ksecp256r1.PubKey",
+      typeUrl: "/kontos.crypto.v1.ksecp256r1.PubKey",
       value: Uint8Array.from(KontosCryptoSecp256r1Pubkey.encode(pubkeyProto).finish()),
     });
   } else if (isEd25519Pubkey(pubkey)) {
@@ -76,7 +76,7 @@ export function anyToSinglePubkey(pubkey: Any): SinglePubkey {
       const {key} = CosmosCryptoSecp256k1Pubkey.decode(pubkey.value);
       return encodeSecp256k1Pubkey(key);
     }
-    case "/cosmos.crypto.ksecp256r1.PubKey": {
+    case "/kontos.crypto.v1.ksecp256r1.PubKey": {
       const {key} = KontosCryptoSecp256r1Pubkey.decode(pubkey.value);
       return encodeSecp256r1Pubkey(key);
     }
@@ -97,7 +97,9 @@ export function anyToSinglePubkey(pubkey: Any): SinglePubkey {
 export function decodePubkey(pubkey: Any): Pubkey {
   switch (pubkey.typeUrl) {
     case "/cosmos.crypto.secp256k1.PubKey":
-    case "/cosmos.crypto.ksecp256r1.PubKey":
+    case "/kontos.crypto.v1.ksecp256r1.PubKey": {
+      return anyToSinglePubkey(pubkey);
+    }
     case "/cosmos.crypto.ed25519.PubKey": {
       return anyToSinglePubkey(pubkey);
     }

@@ -1,16 +1,17 @@
-import { Pubkey } from "@zkkontos/amino";
-import { Uint64 } from "@zkkontos/math";
-import { decodePubkey } from "@zkkontos/proto-signing";
-import { assert } from "@zkkontos/utils";
-import { BaseAccount, ModuleAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
+import {Pubkey} from "@zkkontos/amino";
+import {Uint64} from "@zkkontos/math";
+import {decodePubkey} from "@zkkontos/proto-signing";
+import {assert} from "@zkkontos/utils";
+import {BaseAccount, ModuleAccount} from "cosmjs-types/cosmos/auth/v1beta1/auth";
 import {
   BaseVestingAccount,
   ContinuousVestingAccount,
   DelayedVestingAccount,
   PeriodicVestingAccount,
 } from "cosmjs-types/cosmos/vesting/v1beta1/vesting";
-import { Any } from "cosmjs-types/google/protobuf/any";
+import {Any} from "cosmjs-types/google/protobuf/any";
 import Long from "long";
+import {EthAccount} from "./ethermint/types/v1/account";
 
 export interface Account {
   /** Bech32 account address */
@@ -25,7 +26,7 @@ function uint64FromProto(input: number | Long): Uint64 {
 }
 
 function accountFromBaseAccount(input: BaseAccount): Account {
-  const { address, pubKey, accountNumber, sequence } = input;
+  const {address, pubKey, accountNumber, sequence} = input;
   const pubkey = pubKey ? decodePubkey(pubKey) : null;
   return {
     address: address,
@@ -47,7 +48,7 @@ export type AccountParser = (any: Any) => Account;
  * you'll need to write your own account decoder.
  */
 export function accountFromAny(input: Any): Account {
-  const { typeUrl, value } = input;
+  const {typeUrl, value} = input;
 
   switch (typeUrl) {
     // auth
@@ -56,6 +57,11 @@ export function accountFromAny(input: Any): Account {
       return accountFromBaseAccount(BaseAccount.decode(value));
     case "/cosmos.auth.v1beta1.ModuleAccount": {
       const baseAccount = ModuleAccount.decode(value).baseAccount;
+      assert(baseAccount);
+      return accountFromBaseAccount(baseAccount);
+    }
+    case "/ethermint.types.v1.EthAccount": {
+      const baseAccount = EthAccount.decode(value).baseAccount;
       assert(baseAccount);
       return accountFromBaseAccount(baseAccount);
     }
