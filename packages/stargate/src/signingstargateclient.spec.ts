@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
-import { Secp256k1HdWallet } from "@cosmjs/amino";
+import { Secp256k1HdWallet } from "@zkkontos/amino";
 import {
   coin,
   coins,
@@ -7,9 +7,9 @@ import {
   DirectSecp256k1HdWallet,
   makeCosmoshubPath,
   Registry,
-} from "@cosmjs/proto-signing";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { assert, sleep } from "@cosmjs/utils";
+} from "@zkkontos/proto-signing";
+import { Tendermint34Client } from "@zkkontos/tendermint-rpc";
+import { assert, sleep } from "@zkkontos/utils";
 import { DeepPartial } from "cosmjs-types";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";

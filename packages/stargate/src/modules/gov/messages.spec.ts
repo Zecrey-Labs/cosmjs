@@ -1,6 +1,6 @@
-import { coin, coins, makeCosmoshubPath, Secp256k1HdWallet } from "@cosmjs/amino";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { assert, sleep } from "@cosmjs/utils";
+import { coin, coins, makeCosmoshubPath, Secp256k1HdWallet } from "@zkkontos/amino";
+import { DirectSecp256k1HdWallet } from "@zkkontos/proto-signing";
+import { assert, sleep } from "@zkkontos/utils";
 import { TextProposal, VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { Any } from "cosmjs-types/google/protobuf/any";
 

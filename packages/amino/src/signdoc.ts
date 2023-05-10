@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { toUtf8 } from "@cosmjs/encoding";
-import { Uint53 } from "@cosmjs/math";
+import { toUtf8 } from "@zkkontos/encoding";
+import { Uint53 } from "@zkkontos/math";
 
 import { Coin } from "./coins";
 

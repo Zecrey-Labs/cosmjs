@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg, Coin, Pubkey } from "@cosmjs/amino";
-import { Decimal } from "@cosmjs/math";
-import { decodePubkey, encodePubkey } from "@cosmjs/proto-signing";
-import { assertDefinedAndNotNull } from "@cosmjs/utils";
+import { AminoMsg, Coin, Pubkey } from "@zkkontos/amino";
+import { Decimal } from "@zkkontos/math";
+import { decodePubkey, encodePubkey } from "@zkkontos/proto-signing";
+import { assertDefinedAndNotNull } from "@zkkontos/utils";
 import {
   MsgBeginRedelegate,
   MsgCreateValidator,

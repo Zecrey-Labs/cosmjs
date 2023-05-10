@@ -42,13 +42,13 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/crypto": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/json-rpc": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/socket": "workspace:^",
-    "@cosmjs/stream": "workspace:^",
-    "@cosmjs/utils": "workspace:^",
+    "@zkkontos/crypto": "workspace:^",
+    "@zkkontos/encoding": "workspace:^",
+    "@zkkontos/json-rpc": "workspace:^",
+    "@zkkontos/math": "workspace:^",
+    "@zkkontos/socket": "workspace:^",
+    "@zkkontos/stream": "workspace:^",
+    "@zkkontos/utils": "workspace:^",
     "axios": "^0.21.2",
     "readonly-date": "^1.0.0",
     "xstream": "^11.14.0"

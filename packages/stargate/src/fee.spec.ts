@@ -1,4 +1,4 @@
-import { Decimal } from "@cosmjs/math";
+import { Decimal } from "@zkkontos/math";
 
 import { calculateFee, GasPrice } from "./fee";
 

@@ -1,8 +1,8 @@
-import { StdFee, SigningStargateClient } from "@cosmjs/stargate";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { StdFee, SigningStargateClient } from "@zkkontos/stargate";
+import { DirectSecp256k1HdWallet } from "@zkkontos/proto-signing";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
-import { coins } from "@cosmjs/amino";
-import { Random } from "@cosmjs/crypto";
+import { coins } from "@zkkontos/amino";
+import { Random } from "@zkkontos/crypto";
 
 const defaultHttpUrl = "http://localhost:26658";
 const defaultFee: StdFee = {

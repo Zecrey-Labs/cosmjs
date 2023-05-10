@@ -1,6 +1,6 @@
-# @cosmjs/json-rpc
+# @zkkontos/json-rpc
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/json-rpc.svg)](https://www.npmjs.com/package/@cosmjs/json-rpc)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/json-rpc.svg)](https://www.npmjs.com/package/@zkkontos/json-rpc)
 
 This package provides a light framework for implementing a
 [JSON-RPC 2.0 API](https://www.jsonrpc.org/specification).

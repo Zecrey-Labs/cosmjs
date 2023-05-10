@@ -1,4 +1,4 @@
-import { Sha256, sha256 } from "@cosmjs/crypto";
+import { Sha256, sha256 } from "@zkkontos/crypto";
 
 import {
   encodeBlockId,

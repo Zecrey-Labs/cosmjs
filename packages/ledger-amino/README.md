@@ -1,6 +1,6 @@
-# @cosmjs/ledger-amino
+# @zkkontos/ledger-amino
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/ledger-amino.svg)](https://www.npmjs.com/package/@cosmjs/ledger-amino)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/ledger-amino.svg)](https://www.npmjs.com/package/@zkkontos/ledger-amino)
 
 ## Supported platforms
 

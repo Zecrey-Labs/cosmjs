@@ -1,4 +1,4 @@
-import { JsonRpcRequest, JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
+import { JsonRpcRequest, JsonRpcSuccessResponse } from "@zkkontos/json-rpc";
 import { Stream } from "xstream";
 
 /**

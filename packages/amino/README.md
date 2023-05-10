@@ -1,8 +1,8 @@
-# @cosmjs/amino
+# @zkkontos/amino
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/amino.svg)](https://www.npmjs.com/package/@cosmjs/amino)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/amino.svg)](https://www.npmjs.com/package/@zkkontos/amino)
 
-Helpers for Amino for @cosmjs/stargate.
+Helpers for Amino for @zkkontos/stargate.
 
 ## License
 

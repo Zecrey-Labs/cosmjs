@@ -1,4 +1,4 @@
-import { fromBech32 } from "@cosmjs/encoding";
+import { fromBech32 } from "@zkkontos/encoding";
 
 export function isValidAddress(input: string, requiredPrefix: string): boolean {
   try {

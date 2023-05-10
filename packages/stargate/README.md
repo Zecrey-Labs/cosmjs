@@ -1,6 +1,6 @@
-# @cosmjs/stargate
+# @zkkontos/stargate
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/stargate.svg)](https://www.npmjs.com/package/@cosmjs/stargate)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/stargate.svg)](https://www.npmjs.com/package/@zkkontos/stargate)
 
 A client library for the Cosmos SDK 0.40+.
 

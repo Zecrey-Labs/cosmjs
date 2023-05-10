@@ -1,6 +1,6 @@
-# @cosmjs/encoding
+# @zkkontos/encoding
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/encoding.svg)](https://www.npmjs.com/package/@cosmjs/encoding)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/encoding.svg)](https://www.npmjs.com/package/@zkkontos/encoding)
 
 This package is an extension to the JavaScript standard library that is not
 bound to blockchain products. It provides basic hex/base64/ascii encoding to

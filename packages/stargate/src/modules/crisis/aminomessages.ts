@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AminoMsg } from "@cosmjs/amino";
+import { AminoMsg } from "@zkkontos/amino";
 
 import { AminoConverters } from "../../aminotypes";
 

@@ -1,5 +1,5 @@
-import { Uint53 } from "@cosmjs/math";
-import { toListPromise } from "@cosmjs/stream";
+import { Uint53 } from "@zkkontos/math";
+import { toListPromise } from "@zkkontos/stream";
 import { Stream } from "xstream";
 
 import { createJsonRpcRequest } from "../jsonrpc";

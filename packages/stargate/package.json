@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/stargate",
-  "version": "0.30.1-3",
+  "version": "0.30.1",
   "description": "Utilities for Cosmos SDK 0.40",
   "contributors": [
     "Simon Warta <webmaster128@users.noreply.github.com>"
@@ -31,20 +31,19 @@
   },
   "dependencies": {
     "@confio/ics23": "^0.6.8",
-    "@cosmjs/amino": "npm:@zkkontos/amino@0.30.1-3",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/proto-signing": "npm:@zkkontos/proto-signing@0.30.1-3",
-    "@cosmjs/stream": "workspace:^",
-    "@cosmjs/tendermint-rpc": "npm:@zkkontos/tendermint-rpc@0.30.1",
-    "@cosmjs/utils": "workspace:^",
+    "@zkkontos/amino": "workspace:^",
+    "@zkkontos/encoding": "workspace:^",
+    "@zkkontos/math": "workspace:^",
+    "@zkkontos/proto-signing": "workspace:^",
+    "@zkkontos/stream": "workspace:^",
+    "@zkkontos/tendermint-rpc": "workspace:^",
+    "@zkkontos/utils": "workspace:^",
     "cosmjs-types": "^0.7.1",
     "long": "^4.0.0",
     "protobufjs": "~6.11.3",
     "xstream": "^11.14.0"
   },
   "devDependencies": {
-    "@cosmjs/crypto": "workspace:^",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/eslint-plugin-prettier": "^3",
     "@types/jasmine": "^4",
@@ -55,6 +54,7 @@
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
+    "@zkkontos/crypto": "workspace:^",
     "eslint": "^7.5",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.4",

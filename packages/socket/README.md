@@ -1,8 +1,8 @@
-# @cosmjs/socket
+# @zkkontos/socket
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/socket.svg)](https://www.npmjs.com/package/@cosmjs/socket)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/socket.svg)](https://www.npmjs.com/package/@zkkontos/socket)
 
-@cosmjs/socket is a collection of helper methods and classes for working with
+@zkkontos/socket is a collection of helper methods and classes for working with
 WebSockets.
 
 ## License

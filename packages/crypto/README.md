@@ -1,6 +1,6 @@
-# @cosmjs/crypto
+# @zkkontos/crypto
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/crypto.svg)](https://www.npmjs.com/package/@cosmjs/crypto)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/crypto.svg)](https://www.npmjs.com/package/@zkkontos/crypto)
 
 This package contains low-level cryptographic functionality used in other
 @cosmjs libraries. Little of it is implemented here, but mainly it is a curation

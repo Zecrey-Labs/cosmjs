@@ -1,4 +1,4 @@
-import { JsonRpcRequest } from "@cosmjs/json-rpc";
+import { JsonRpcRequest } from "@zkkontos/json-rpc";
 
 const numbersWithoutZero = "123456789";
 

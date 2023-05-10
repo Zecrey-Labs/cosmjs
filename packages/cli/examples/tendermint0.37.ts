@@ -1,7 +1,7 @@
-import { coins, makeCosmoshubPath } from "@cosmjs/amino";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
-import { assertIsDeliverTxSuccess, calculateFee, GasPrice, SigningStargateClient } from "@cosmjs/stargate";
-import { Tendermint37Client } from "@cosmjs/tendermint-rpc";
+import { coins, makeCosmoshubPath } from "@zkkontos/amino";
+import { DirectSecp256k1HdWallet } from "@zkkontos/proto-signing";
+import { assertIsDeliverTxSuccess, calculateFee, GasPrice, SigningStargateClient } from "@zkkontos/stargate";
+import { Tendermint37Client } from "@zkkontos/tendermint-rpc";
 
 // Network config
 const prefix = "wasm";

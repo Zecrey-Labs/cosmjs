@@ -37,16 +37,15 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.demo.config.js"
   },
   "dependencies": {
-    "@cosmjs/amino": "workspace:^",
-    "@cosmjs/crypto": "workspace:^",
-    "@cosmjs/encoding": "workspace:^",
-    "@cosmjs/math": "workspace:^",
-    "@cosmjs/utils": "workspace:^",
+    "@zkkontos/amino": "workspace:^",
+    "@zkkontos/crypto": "workspace:^",
+    "@zkkontos/encoding": "workspace:^",
+    "@zkkontos/math": "workspace:^",
+    "@zkkontos/utils": "workspace:^",
     "ledger-cosmos-js": "^2.1.8",
     "semver": "^7.3.2"
   },
   "devDependencies": {
-    "@cosmjs/stargate": "workspace:^",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@ledgerhq/hw-transport": "^5.25.0",
     "@ledgerhq/hw-transport-node-hid": "^5.25.0",
@@ -59,6 +58,7 @@
     "@types/semver": "^7.3.4",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.54.0",
+    "@zkkontos/stargate": "workspace:^",
     "eslint": "^7.5",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.4",

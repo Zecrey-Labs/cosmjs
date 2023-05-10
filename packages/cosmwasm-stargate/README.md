@@ -1,12 +1,12 @@
-# @cosmjs/cosmwasm-stargate
+# @zkkontos/cosmwasm-stargate
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/cosmwasm-stargate.svg)](https://www.npmjs.com/package/@cosmjs/cosmwasm-stargate)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/cosmwasm-stargate.svg)](https://www.npmjs.com/package/@zkkontos/cosmwasm-stargate)
 
 An SDK to build CosmWasm clients.
 
 ## Compatibility
 
-| CosmWasm        | x/wasm    | @cosmjs/cosmwasm-stargate |
+| CosmWasm        | x/wasm    | @zkkontos/cosmwasm-stargate |
 | --------------- | --------- | ------------------------- |
 | 0.16-1.0.0-beta | 0.21-0.23 | `^0.28.0`                 |
 | 0.16-1.0.0-beta | 0.21-0.23 | `^0.27.0`                 |

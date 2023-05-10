@@ -1,8 +1,8 @@
-# @cosmjs/stream
+# @zkkontos/stream
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/stream.svg)](https://www.npmjs.com/package/@cosmjs/stream)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/stream.svg)](https://www.npmjs.com/package/@zkkontos/stream)
 
-@cosmjs/stream are some helper methods and classes to help with stream
+@zkkontos/stream are some helper methods and classes to help with stream
 processing.
 
 ## License

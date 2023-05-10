@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-import { fromHex } from "@cosmjs/encoding";
+import { fromHex } from "@zkkontos/encoding";
 
 import { Secp256r1 } from "./secp256r1";
 import { ExtendedSecp256r1Signature, Secp256r1Signature } from "./secp256r1signature";

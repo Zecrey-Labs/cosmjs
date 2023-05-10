@@ -1,6 +1,6 @@
-# @cosmjs/utils
+# @zkkontos/utils
 
-[![npm version](https://img.shields.io/npm/v/@cosmjs/utils.svg)](https://www.npmjs.com/package/@cosmjs/utils)
+[![npm version](https://img.shields.io/npm/v/@zkkontos/utils.svg)](https://www.npmjs.com/package/@zkkontos/utils)
 
 Utility functions independent of blockchain applications. Primarily used for
 testing but stuff like `sleep` can also be useful at runtime.
