@@ -7,6 +7,8 @@ import {
   isEd25519Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
+  Secp256r1Pubkey,
+  isSecp256r1Pubkey,
   MultisigThresholdPubkey,
   Pubkey,
   pubkeyType,
@@ -23,6 +25,20 @@ export function encodeSecp256k1Pubkey(pubkey: Uint8Array): Secp256k1Pubkey {
   }
   return {
     type: pubkeyType.secp256k1,
+    value: toBase64(pubkey),
+  };
+}
+
+/**
+ * Takes a Secp256k1 public key as raw bytes and returns the Amino JSON
+ * representation of it (the type/value wrapper object).
+ */
+export function encodeSecp256r1Pubkey(pubkey: Uint8Array): Secp256r1Pubkey {
+  if (pubkey.length !== 33) {
+    throw new Error("Public key must be compressed secp256r1, i.e. 33 bytes starting with 0x02 or 0x03");
+  }
+  return {
+    type: pubkeyType.ksecp256r1,
     value: toBase64(pubkey),
   };
 }
@@ -45,6 +61,7 @@ export function encodeEd25519Pubkey(pubkey: Uint8Array): Ed25519Pubkey {
 // Prefixes listed here: https://github.com/tendermint/tendermint/blob/d419fffe18531317c28c29a292ad7d253f6cafdf/docs/spec/blockchain/encoding.md#public-key-cryptography
 // Last bytes is varint-encoded length prefix
 const pubkeyAminoPrefixSecp256k1 = fromHex("eb5ae987" + "21" /* fixed length */);
+const pubkeyAminoPrefixSecp256r1 = fromHex("eb5ae987" + "21" /* fixed length */);
 const pubkeyAminoPrefixEd25519 = fromHex("1624de64" + "20" /* fixed length */);
 const pubkeyAminoPrefixSr25519 = fromHex("0dfb1005" + "20" /* fixed length */);
 /** See https://github.com/tendermint/tendermint/commit/38b401657e4ad7a7eeb3c30a3cbf512037df3740 */
@@ -61,6 +78,15 @@ export function decodeAminoPubkey(data: Uint8Array): Pubkey {
     }
     return {
       type: pubkeyType.secp256k1,
+      value: toBase64(rest),
+    };
+  } else if (arrayContentStartsWith(data, pubkeyAminoPrefixSecp256r1)) {
+    const rest = data.slice(pubkeyAminoPrefixSecp256r1.length);
+    if (rest.length !== 33) {
+      throw new Error("Invalid rest data length. Expected 33 bytes (compressed secp256r1 pubkey).");
+    }
+    return {
+      type: pubkeyType.ksecp256r1,
       value: toBase64(rest),
     };
   } else if (arrayContentStartsWith(data, pubkeyAminoPrefixEd25519)) {
@@ -207,7 +233,9 @@ export function encodeAminoPubkey(pubkey: Pubkey): Uint8Array {
     return new Uint8Array([...pubkeyAminoPrefixEd25519, ...fromBase64(pubkey.value)]);
   } else if (isSecp256k1Pubkey(pubkey)) {
     return new Uint8Array([...pubkeyAminoPrefixSecp256k1, ...fromBase64(pubkey.value)]);
-  } else {
+  } else if(isSecp256r1Pubkey(pubkey)){
+    return new Uint8Array([...pubkeyAminoPrefixSecp256r1, ...fromBase64(pubkey.value)]);
+  }else {
     throw new Error("Unsupported pubkey type");
   }
 }

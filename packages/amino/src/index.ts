@@ -3,8 +3,9 @@ export {
   pubkeyToRawAddress,
   rawEd25519PubkeyToRawAddress,
   rawSecp256k1PubkeyToRawAddress,
+  rawSecp256r1PubkeyToRawAddress,
 } from "./addresses";
-export { addCoins, Coin, coin, coins, parseCoins } from "./coins";
+export {addCoins, Coin, coin, coins, parseCoins} from "./coins";
 export {
   decodeAminoPubkey,
   decodeBech32Pubkey,
@@ -12,25 +13,29 @@ export {
   encodeBech32Pubkey,
   encodeEd25519Pubkey,
   encodeSecp256k1Pubkey,
+  encodeSecp256r1Pubkey,
 } from "./encoding";
-export { createMultisigThresholdPubkey } from "./multisig";
-export { makeCosmoshubPath } from "./paths";
+export {createMultisigThresholdPubkey} from "./multisig";
+export {makeCosmoshubPath} from "./paths";
 export {
   Ed25519Pubkey,
   isEd25519Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
+  isSecp256r1Pubkey,
   isSinglePubkey,
   MultisigThresholdPubkey,
   Pubkey,
   pubkeyType,
   Secp256k1Pubkey,
+  Secp256r1Pubkey,
   SinglePubkey,
 } from "./pubkeys";
-export { extractKdfConfiguration, Secp256k1HdWallet, Secp256k1HdWalletOptions } from "./secp256k1hdwallet";
-export { Secp256k1Wallet } from "./secp256k1wallet";
-export { decodeSignature, encodeSecp256k1Signature, StdSignature } from "./signature";
-export { AminoMsg, makeSignDoc, serializeSignDoc, StdFee, StdSignDoc } from "./signdoc";
-export { AccountData, Algo, AminoSignResponse, OfflineAminoSigner } from "./signer";
-export { isStdTx, makeStdTx, StdTx } from "./stdtx";
-export { executeKdf, KdfConfiguration } from "./wallet";
+export {extractKdfConfiguration, Secp256k1HdWallet, Secp256k1HdWalletOptions} from "./secp256k1hdwallet";
+export {Secp256k1Wallet} from "./secp256k1wallet";
+export {Secp256r1Wallet} from "./secp256r1wallet";
+export {decodeSignature, encodeSecp256k1Signature, encodeSecp256r1Signature, StdSignature} from "./signature";
+export {AminoMsg, makeSignDoc, serializeSignDoc, StdFee, StdSignDoc} from "./signdoc";
+export {AccountData, Algo, AminoSignResponse, OfflineAminoSigner} from "./signer";
+export {isStdTx, makeStdTx, StdTx} from "./stdtx";
+export {executeKdf, KdfConfiguration} from "./wallet";

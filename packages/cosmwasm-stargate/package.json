@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/cosmwasm-stargate",
+  "name": "@zkkontos/cosmwasm-stargate",
   "version": "0.30.1",
   "description": "CosmWasm SDK",
   "contributors": [

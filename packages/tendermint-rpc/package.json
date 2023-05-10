@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/tendermint-rpc",
+  "name": "@zkkontos/tendermint-rpc",
   "version": "0.30.1",
   "description": "Tendermint RPC clients",
   "contributors": [

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { fromBase64, toBase64 } from "@cosmjs/encoding";
+import {fromBase64, toBase64} from "@cosmjs/encoding";
 
-import { encodeSecp256k1Pubkey } from "./encoding";
-import { Pubkey, pubkeyType } from "./pubkeys";
+import {encodeSecp256k1Pubkey, encodeSecp256r1Pubkey} from "./encoding";
+import {Pubkey, pubkeyType} from "./pubkeys";
 
 export interface StdSignature {
   readonly pub_key: Pubkey;
@@ -28,6 +28,19 @@ export function encodeSecp256k1Signature(pubkey: Uint8Array, signature: Uint8Arr
   };
 }
 
+export function encodeSecp256r1Signature(pubkey: Uint8Array, signature: Uint8Array): StdSignature {
+  if (signature.length !== 64) {
+    throw new Error(
+      "Signature must be 64 bytes long. Cosmos SDK uses a 2x32 byte fixed length encoding for the secp256r1 signature integers r and s.",
+    );
+  }
+
+  return {
+    pub_key: encodeSecp256r1Pubkey(pubkey),
+    signature: toBase64(signature),
+  };
+}
+
 export function decodeSignature(signature: StdSignature): {
   readonly pubkey: Uint8Array;
   readonly signature: Uint8Array;
@@ -35,6 +48,11 @@ export function decodeSignature(signature: StdSignature): {
   switch (signature.pub_key.type) {
     // Note: please don't add cases here without writing additional unit tests
     case pubkeyType.secp256k1:
+      return {
+        pubkey: fromBase64(signature.pub_key.value),
+        signature: fromBase64(signature.signature),
+      };
+    case pubkeyType.ksecp256r1:
       return {
         pubkey: fromBase64(signature.pub_key.value),
         signature: fromBase64(signature.signature),

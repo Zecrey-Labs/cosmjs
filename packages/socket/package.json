@@ -1,5 +1,5 @@
 {
-  "name": "@cosmjs/socket",
+  "name": "@zkkontos/socket",
   "version": "0.30.1",
   "description": "Utility functions for working with WebSockets",
   "contributors": [
