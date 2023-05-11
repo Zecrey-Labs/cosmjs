@@ -1,10 +1,11 @@
 import {encodeSecp256r1Signature, rawSecp256r1PubkeyToRawAddress} from "@zkkontos/amino";
-import {Secp256r1, sha256,keccak256} from "@zkkontos/crypto";
-import {toBech32} from "@zkkontos/encoding";
+import {keccak256, Secp256r1, sha256} from "@zkkontos/crypto";
+import {fromHex, toBech32, toHex} from "@zkkontos/encoding";
 import {SignDoc} from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import {AccountData, DirectSignResponse, OfflineDirectSigner} from "./signer";
 import {makeSignBytes} from "./signing";
+import {ethers} from "ethers";
 
 /**
  * A wallet that holds a single secp256r1 keypair.
@@ -23,18 +24,50 @@ export class DirectSecp256r1Wallet implements OfflineDirectSigner {
     return new DirectSecp256r1Wallet(privkey, Secp256r1.compressPubkey(uncompressed), prefix);
   }
 
-  private readonly pubkey: Uint8Array;
-  private readonly privkey: Uint8Array;
-  private readonly prefix: string;
+  /**
+   * Creates a DirectSecp256r1Wallet from the given private key
+   *
+   * @param pubKey The compressed public key
+   * @param name
+   * @param prefix The bech32 address prefix (human readable part). Defaults to "kontos".
+   */
+  public static async fromPubKeyForQuery(
+    pubKey: Uint8Array,
+    name = "",
+    prefix = "kontos",
+  ): Promise<DirectSecp256r1Wallet> {
+    return new DirectSecp256r1Wallet(undefined, pubKey, prefix, name);
+  }
 
-  private constructor(privkey: Uint8Array, pubkey: Uint8Array, prefix: string) {
+  public readonly pubkey: Uint8Array;
+  public readonly privkey: Uint8Array | undefined;
+  public readonly prefix: string;
+  public readonly name: string;
+  public readonly kontosAddress: string;
+  public readonly nameAddress: string;
+
+  private constructor(privkey: Uint8Array | undefined, pubkey: Uint8Array, prefix: string, name = "") {
     this.privkey = privkey;
     this.pubkey = pubkey;
     this.prefix = prefix;
+    this.name = name;
+    this.nameAddress = DirectSecp256r1Wallet.nameToAddress(this.name);
+    this.kontosAddress = this.address;
+  }
+
+  public static nameToAddress(name: string): string {
+    const nameBytes = fromHex(ethers.utils.defaultAbiCoder.encode(["string"], [name]).slice(2));
+    const addressBytes = keccak256(nameBytes).slice(12);
+    return "0x" + toHex(addressBytes);
   }
 
   private get address(): string {
-    return toBech32(this.prefix, rawSecp256r1PubkeyToRawAddress(this.pubkey));
+    if (this.name === "") {
+      return toBech32(this.prefix, rawSecp256r1PubkeyToRawAddress(this.pubkey));
+    } else {
+      const address = fromHex(DirectSecp256r1Wallet.nameToAddress(this.name).slice(2));
+      return toBech32(this.prefix, address);
+    }
   }
 
   public async getAccounts(): Promise<readonly AccountData[]> {
@@ -48,11 +81,14 @@ export class DirectSecp256r1Wallet implements OfflineDirectSigner {
   }
 
   public async signDirect(address: string, signDoc: SignDoc): Promise<DirectSignResponse> {
+    if (this.privkey === undefined) {
+      throw new Error(`PrivateKey ${this.privkey} not found in wallet`);
+    }
     const signBytes = makeSignBytes(signDoc);
     if (address !== this.address) {
       throw new Error(`Address ${address} not found in wallet`);
     }
-    const hashedMessage = keccak256(signBytes);
+    const hashedMessage = sha256(signBytes);
     const signature = await Secp256r1.createSignature(hashedMessage, this.privkey);
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     const stdSignature = encodeSecp256r1Signature(this.pubkey, signatureBytes);
@@ -61,4 +97,5 @@ export class DirectSecp256r1Wallet implements OfflineDirectSigner {
       signature: stdSignature,
     };
   }
+
 }

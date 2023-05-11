@@ -1,5 +1,5 @@
-import { OfflineAminoSigner, StdSignature } from "@zkkontos/amino";
 import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { OfflineAminoSigner, StdSignature } from "@zkkontos/amino";
 
 export type Algo = "secp256k1" | "ed25519" | "sr25519" | "ksecp256r1";
 export interface AccountData {

@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/proto-signing",
-  "version": "0.30.8",
+  "version": "0.30.12",
   "description": "Utilities for protobuf based signing (Cosmos SDK 0.40+)",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>",
@@ -45,6 +45,7 @@
     "@zkkontos/math": "workspace:^",
     "@zkkontos/utils": "workspace:^",
     "cosmjs-types": "^0.7.1",
+    "ethers": "^5.7.2",
     "long": "^4.0.0",
     "protobufjs": "6.10.2"
   },

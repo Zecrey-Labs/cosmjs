@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/crypto",
-  "version": "0.30.8",
+  "version": "0.30.12",
   "description": "Cryptography resources for blockchain projects",
   "contributors": [
     "IOV SAS <admin@iov.one>",

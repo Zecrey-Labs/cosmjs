@@ -1,4 +1,10 @@
-import {encodeSecp256k1Pubkey, encodeSecp256r1Pubkey, makeSignDoc as makeSignDocAmino, StdFee} from "@zkkontos/amino";
+import {
+  encodeSecp256k1Pubkey,
+  encodeSecp256r1Pubkey,
+  makeSignDoc as makeSignDocAmino,
+  StdFee,
+  StdSignature
+} from "@zkkontos/amino";
 import {fromBase64} from "@zkkontos/encoding";
 import {Int53, Uint53} from "@zkkontos/math";
 import {
@@ -12,13 +18,13 @@ import {
   Registry,
   TxBodyEncodeObject,
 } from "@zkkontos/proto-signing";
+import {SignDoc, TxRaw} from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import {HttpEndpoint, Tendermint34Client, TendermintClient} from "@zkkontos/tendermint-rpc";
 import {assert, assertDefined} from "@zkkontos/utils";
 import {Coin} from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {MsgWithdrawDelegatorReward} from "cosmjs-types/cosmos/distribution/v1beta1/tx";
 import {MsgDelegate, MsgUndelegate} from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import {SignMode} from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
-import {TxRaw} from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import {MsgTransfer} from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import {Height} from "cosmjs-types/ibc/core/client/v1/client";
 import Long from "long";
@@ -308,6 +314,33 @@ export class SigningStargateClient extends StargateClient {
     return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
   }
 
+  public async constructSigningData(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee | "auto" | number,
+    memo = "",
+  ): Promise<SignDoc> {
+    let usedFee: StdFee;
+    if (fee == "auto" || typeof fee === "number") {
+      assertDefined(this.gasPrice, "Gas price must be set in the client options when auto gas is used.");
+      const gasEstimation = await this.simulate(signerAddress, messages, memo);
+      const multiplier = typeof fee === "number" ? fee : 1.3;
+      usedFee = calculateFee(Math.round(gasEstimation * multiplier), this.gasPrice);
+    } else {
+      usedFee = fee;
+    }
+    return this.constructSignDoc(signerAddress, messages, usedFee, memo);
+  }
+
+  public async constructTxBytes(signed: SignDoc, signature: StdSignature): Promise<Uint8Array> {
+    const txRaw = TxRaw.fromPartial({
+      bodyBytes: signed.bodyBytes,
+      authInfoBytes: signed.authInfoBytes,
+      signatures: [fromBase64(signature.signature)],
+    });
+    return TxRaw.encode(txRaw).finish();
+  }
+
   /**
    * Gets account number and sequence from the API, creates a sign doc,
    * creates a single signature and assembles the signed transaction.
@@ -338,13 +371,56 @@ export class SigningStargateClient extends StargateClient {
       };
     }
 
-    if (true) {
-      return this.signByHardware(signerAddress, messages, fee, memo, signerData);
-    }
-
     return isOfflineDirectSigner(this.signer)
       ? this.signDirect(signerAddress, messages, fee, memo, signerData)
       : this.signAmino(signerAddress, messages, fee, memo, signerData);
+  }
+
+  public async constructSignDoc(
+    signerAddress: string,
+    messages: readonly EncodeObject[],
+    fee: StdFee,
+    memo: string,
+    explicitSignerData?: SignerData,
+  ): Promise<SignDoc> {
+    let signerData: SignerData;
+    if (explicitSignerData) {
+      signerData = explicitSignerData;
+    } else {
+      const {accountNumber, sequence} = await this.getSequence(signerAddress);
+      const chainId = await this.getChainId();
+      signerData = {
+        accountNumber: accountNumber,
+        sequence: sequence,
+        chainId: chainId,
+      };
+    }
+    const {accountNumber, sequence, chainId} = signerData;
+
+    const accountFromSigner = (await this.signer.getAccounts()).find(
+      (account) => account.address === signerAddress,
+    );
+    if (!accountFromSigner) {
+      throw new Error("Failed to retrieve account from signer");
+    }
+    const pubkey = encodePubkey(encodeSecp256r1Pubkey(accountFromSigner.pubkey));
+    const txBodyEncodeObject: TxBodyEncodeObject = {
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
+      value: {
+        messages: messages,
+        memo: memo,
+      },
+    };
+    const txBodyBytes = this.registry.encode(txBodyEncodeObject);
+    const gasLimit = Int53.fromString(fee.gas).toNumber();
+    const authInfoBytes = makeAuthInfoBytes(
+      [{pubkey, sequence}],
+      fee.amount,
+      gasLimit,
+      fee.granter,
+      fee.payer,
+    );
+    return makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
   }
 
   private async signAmino(
@@ -464,15 +540,6 @@ export class SigningStargateClient extends StargateClient {
       fee.payer,
     );
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
-    // TODO construct signature
-    /**
-     *     const signBytes = makeSignBytes(signDoc);
-     *     if (address !== this.address) {
-     *       throw new Error(`Address ${address} not found in wallet`);
-     *     }
-     *     const hashedMessage = sha256(signBytes);
-     *     const signature = await Secp256k1.createSignature(hashedMessage, this.privkey);
-     */
     const {signature, signed} = await this.signer.signDirect(signerAddress, signDoc);
     return TxRaw.fromPartial({
       bodyBytes: signed.bodyBytes,
