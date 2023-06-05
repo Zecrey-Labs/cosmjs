@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/encoding",
-  "version": "0.30.12",
+  "version": "0.30.16",
   "description": "Encoding helpers for blockchain projects",
   "contributors": [
     "IOV SAS <admin@iov.one>"

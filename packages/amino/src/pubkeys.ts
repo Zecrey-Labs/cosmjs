@@ -15,6 +15,15 @@ export function isEd25519Pubkey(pubkey: Pubkey): pubkey is Ed25519Pubkey {
   return (pubkey as Ed25519Pubkey).type === "tendermint/PubKeyEd25519";
 }
 
+export interface EdBls12377Pubkey extends SinglePubkey {
+  readonly type: "tendermint/PubKeyEdbls12377";
+  readonly value: string;
+}
+
+export function isEdbls12377Pubkey(pubkey: Pubkey): pubkey is Ed25519Pubkey {
+  return (pubkey as EdBls12377Pubkey).type === "tendermint/PubKeyEdbls12377";
+}
+
 export interface Secp256k1Pubkey extends SinglePubkey {
   readonly type: "tendermint/PubKeySecp256k1";
   readonly value: string;
@@ -38,6 +47,7 @@ export const pubkeyType = {
   secp256k1: "tendermint/PubKeySecp256k1" as const,
   /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/secp256k1/secp256k1.go#L23 */
   ed25519: "tendermint/PubKeyEd25519" as const,
+  edbls12377: "tendermint/PubKeyEdbls12377" as const,
   /** @see https://github.com/tendermint/tendermint/blob/v0.33.0/crypto/sr25519/codec.go#L12 */
   sr25519: "tendermint/PubKeySr25519" as const,
   ksecp256r1: "kontos/PubKeyKSecp256r1" as const,
@@ -63,7 +73,12 @@ export interface SinglePubkey extends Pubkey {
 }
 
 export function isSinglePubkey(pubkey: Pubkey): pubkey is SinglePubkey {
-  const singPubkeyTypes: string[] = [pubkeyType.ed25519, pubkeyType.secp256k1, pubkeyType.sr25519];
+  const singPubkeyTypes: string[] = [
+    pubkeyType.ed25519,
+    pubkeyType.edbls12377,
+    pubkeyType.secp256k1,
+    pubkeyType.sr25519,
+  ];
   return singPubkeyTypes.includes(pubkey.type);
 }
 

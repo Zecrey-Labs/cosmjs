@@ -1,21 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { addCoins } from "@zkkontos/amino";
-import { toHex } from "@zkkontos/encoding";
-import { Uint53 } from "@zkkontos/math";
-import {
-  HttpEndpoint,
-  Tendermint34Client,
-  TendermintClient,
-  toRfc3339WithNanoseconds,
-} from "@zkkontos/tendermint-rpc";
-import { assert, sleep } from "@zkkontos/utils";
-import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
-import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
+import {addCoins} from "@zkkontos/amino";
+import {toHex} from "@zkkontos/encoding";
+import {Uint53} from "@zkkontos/math";
+import {HttpEndpoint, Tendermint34Client, TendermintClient, toRfc3339WithNanoseconds,} from "@zkkontos/tendermint-rpc";
+import {assert, sleep} from "@zkkontos/utils";
+import {MsgData} from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
+import {Coin} from "cosmjs-types/cosmos/base/v1beta1/coin";
+import {QueryDelegatorDelegationsResponse} from "cosmjs-types/cosmos/staking/v1beta1/query";
+import {DelegationResponse} from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
-import { Account, accountFromAny, AccountParser } from "./accounts";
-import { Event, fromTendermintEvent } from "./events";
+import {Account, accountFromAny, AccountParser} from "./accounts";
+import {Event, fromTendermintEvent} from "./events";
 import {
   AuthExtension,
   BankExtension,
@@ -26,7 +21,7 @@ import {
   StakingExtension,
   TxExtension,
 } from "./modules";
-import { QueryClient } from "./queryclient";
+import {QueryClient} from "./queryclient";
 import {
   isSearchByHeightQuery,
   isSearchBySentFromOrToQuery,
@@ -231,7 +226,7 @@ export class StargateClient {
         setupTxExtension,
       );
     }
-    const { accountParser = accountFromAny } = options;
+    const {accountParser = accountFromAny} = options;
     this.accountParser = accountParser;
   }
 
@@ -296,9 +291,13 @@ export class StargateClient {
   public async getSequence(address: string): Promise<SequenceResponse> {
     const account = await this.getAccount(address);
     if (!account) {
-      throw new Error(
-        `Account '${address}' does not exist on chain. Send some tokens there before trying to query sequence.`,
-      );
+      // throw new Error(
+      //   `Account '${address}' does not exist on chain. Send some tokens there before trying to query sequence.`,
+      // );
+      return {
+        accountNumber: 0,
+        sequence: 0,
+      };
     }
     return {
       accountNumber: account.accountNumber,
@@ -341,7 +340,7 @@ export class StargateClient {
     const allDelegations = [];
     let startAtKey: Uint8Array | undefined = undefined;
     do {
-      const { delegationResponses, pagination }: QueryDelegatorDelegationsResponse =
+      const {delegationResponses, pagination}: QueryDelegatorDelegationsResponse =
         await this.forceGetQueryClient().staking.delegatorDelegations(address, startAtKey);
 
       const loadedDelegations = delegationResponses || [];
@@ -458,19 +457,19 @@ export class StargateClient {
       const result = await this.getTx(txId);
       return result
         ? {
-            code: result.code,
-            height: result.height,
-            txIndex: result.txIndex,
-            events: result.events,
-            rawLog: result.rawLog,
-            transactionHash: txId,
-            gasUsed: result.gasUsed,
-            gasWanted: result.gasWanted,
-          }
+          code: result.code,
+          height: result.height,
+          txIndex: result.txIndex,
+          events: result.events,
+          rawLog: result.rawLog,
+          transactionHash: txId,
+          gasUsed: result.gasUsed,
+          gasWanted: result.gasWanted,
+        }
         : pollForTx(txId);
     };
 
-    const broadcasted = await this.forceGetTmClient().broadcastTxSync({ tx });
+    const broadcasted = await this.forceGetTmClient().broadcastTxSync({tx});
     if (broadcasted.code) {
       return Promise.reject(
         new BroadcastTxError(broadcasted.code, broadcasted.codespace ?? "", broadcasted.log),
@@ -492,7 +491,7 @@ export class StargateClient {
   }
 
   private async txsQuery(query: string): Promise<readonly IndexedTx[]> {
-    const results = await this.forceGetTmClient().txSearchAll({ query: query });
+    const results = await this.forceGetTmClient().txSearchAll({query: query});
     return results.txs.map((tx) => {
       return {
         height: tx.height,

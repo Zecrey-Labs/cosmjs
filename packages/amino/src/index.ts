@@ -12,6 +12,7 @@ export {
   encodeAminoPubkey,
   encodeBech32Pubkey,
   encodeEd25519Pubkey,
+  encodeEdbls12377Pubkey,
   encodeSecp256k1Pubkey,
   encodeSecp256r1Pubkey,
 } from "./encoding";
@@ -24,6 +25,7 @@ export {
   isSecp256k1Pubkey,
   isSecp256r1Pubkey,
   isSinglePubkey,
+  isEdbls12377Pubkey,
   MultisigThresholdPubkey,
   Pubkey,
   pubkeyType,

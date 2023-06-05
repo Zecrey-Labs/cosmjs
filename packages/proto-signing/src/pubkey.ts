@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
   encodeEd25519Pubkey,
+  encodeEdbls12377Pubkey,
   encodeSecp256k1Pubkey,
   encodeSecp256r1Pubkey,
   isEd25519Pubkey,
+  isEdbls12377Pubkey,
   isMultisigThresholdPubkey,
   isSecp256k1Pubkey,
   isSecp256r1Pubkey,
@@ -11,13 +13,15 @@ import {
   Pubkey,
   SinglePubkey,
 } from "@zkkontos/amino";
-import {fromBase64} from "@zkkontos/encoding";
-import {Uint53} from "@zkkontos/math";
-import {PubKey as CosmosCryptoEd25519Pubkey} from "cosmjs-types/cosmos/crypto/ed25519/keys";
-import {LegacyAminoPubKey} from "cosmjs-types/cosmos/crypto/multisig/keys";
-import {PubKey as CosmosCryptoSecp256k1Pubkey} from "cosmjs-types/cosmos/crypto/secp256k1/keys";
-import {PubKey as KontosCryptoSecp256r1Pubkey} from "./kontos/crypto/v1/ksecp256r1/keys";
-import {Any} from "cosmjs-types/google/protobuf/any";
+import { fromBase64 } from "@zkkontos/encoding";
+import { Uint53 } from "@zkkontos/math";
+import { PubKey as CosmosCryptoEd25519Pubkey } from "cosmjs-types/cosmos/crypto/ed25519/keys";
+import { LegacyAminoPubKey } from "cosmjs-types/cosmos/crypto/multisig/keys";
+import { PubKey as CosmosCryptoSecp256k1Pubkey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
+import { Any } from "cosmjs-types/google/protobuf/any";
+
+import { PubKey as KontosCryptoEdbls12377Pubkey } from "./kontos/crypto/v1/edbls12377/keys";
+import { PubKey as KontosCryptoSecp256r1Pubkey } from "./kontos/crypto/v1/ksecp256r1/keys";
 
 /**
  * Takes a pubkey in the Amino JSON object style (type/value wrapper)
@@ -50,6 +54,14 @@ export function encodePubkey(pubkey: Pubkey): Any {
       typeUrl: "/cosmos.crypto.ed25519.PubKey",
       value: Uint8Array.from(CosmosCryptoEd25519Pubkey.encode(pubkeyProto).finish()),
     });
+  } else if (isEdbls12377Pubkey(pubkey)) {
+    const pubkeyProto = KontosCryptoEdbls12377Pubkey.fromPartial({
+      key: fromBase64(pubkey.value),
+    });
+    return Any.fromPartial({
+      typeUrl: "/cosmos.crypto.edbls12377.PubKey",
+      value: Uint8Array.from(KontosCryptoEdbls12377Pubkey.encode(pubkeyProto).finish()),
+    });
   } else if (isMultisigThresholdPubkey(pubkey)) {
     const pubkeyProto = LegacyAminoPubKey.fromPartial({
       threshold: Uint53.fromString(pubkey.value.threshold).toNumber(),
@@ -73,16 +85,20 @@ export function encodePubkey(pubkey: Pubkey): Any {
 export function anyToSinglePubkey(pubkey: Any): SinglePubkey {
   switch (pubkey.typeUrl) {
     case "/cosmos.crypto.secp256k1.PubKey": {
-      const {key} = CosmosCryptoSecp256k1Pubkey.decode(pubkey.value);
+      const { key } = CosmosCryptoSecp256k1Pubkey.decode(pubkey.value);
       return encodeSecp256k1Pubkey(key);
     }
     case "/kontos.crypto.v1.ksecp256r1.PubKey": {
-      const {key} = KontosCryptoSecp256r1Pubkey.decode(pubkey.value);
+      const { key } = KontosCryptoSecp256r1Pubkey.decode(pubkey.value);
       return encodeSecp256r1Pubkey(key);
     }
     case "/cosmos.crypto.ed25519.PubKey": {
-      const {key} = CosmosCryptoEd25519Pubkey.decode(pubkey.value);
+      const { key } = CosmosCryptoEd25519Pubkey.decode(pubkey.value);
       return encodeEd25519Pubkey(key);
+    }
+    case "/cosmos.crypto.edbls12377.PubKey": {
+      const { key } = KontosCryptoEdbls12377Pubkey.decode(pubkey.value);
+      return encodeEdbls12377Pubkey(key);
     }
     default:
       throw new Error(`Pubkey type_url ${pubkey.typeUrl} not recognized as single public key type`);
@@ -103,8 +119,11 @@ export function decodePubkey(pubkey: Any): Pubkey {
     case "/cosmos.crypto.ed25519.PubKey": {
       return anyToSinglePubkey(pubkey);
     }
+    case "/cosmos.crypto.edbls12377.PubKey": {
+      return anyToSinglePubkey(pubkey);
+    }
     case "/cosmos.crypto.multisig.LegacyAminoPubKey": {
-      const {threshold, publicKeys} = LegacyAminoPubKey.decode(pubkey.value);
+      const { threshold, publicKeys } = LegacyAminoPubKey.decode(pubkey.value);
       const out: MultisigThresholdPubkey = {
         type: "tendermint/PubKeyMultisigThreshold",
         value: {

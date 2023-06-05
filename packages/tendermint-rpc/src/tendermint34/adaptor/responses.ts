@@ -184,7 +184,7 @@ function decodePubkey(data: RpcPubkey): ValidatorPubkey {
   if ("Sum" in data) {
     // we don't need to check type because we're checking algorithm
     const [[algorithm, value]] = Object.entries(data.Sum.value);
-    assert(algorithm === "ed25519" || algorithm === "secp256k1" || algorithm === "bls12377", `unknown pubkey type: ${algorithm}`);
+    assert(algorithm === "ed25519" || algorithm === "secp256k1" || algorithm === "edbls12377", `unknown pubkey type: ${algorithm}`);
     return {
       algorithm,
       data: fromBase64(assertNotEmpty(value)),
@@ -202,11 +202,11 @@ function decodePubkey(data: RpcPubkey): ValidatorPubkey {
           algorithm: "secp256k1",
           data: fromBase64(assertNotEmpty(data.value)),
         };
-      case "tendermint/PubKeyBLS12377":
+      case "tendermint/PubKeyEdbls12377":
         return {
-          algorithm: "bls12377",
+          algorithm: "edbls12377",
           data: fromBase64(assertNotEmpty(data.value)),
-        }
+        };
       default:
         throw new Error(`unknown pubkey type: ${data.type}`);
     }

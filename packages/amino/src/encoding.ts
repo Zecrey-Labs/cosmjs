@@ -9,6 +9,7 @@ import {
   isSecp256k1Pubkey,
   Secp256r1Pubkey,
   isSecp256r1Pubkey,
+  EdBls12377Pubkey,
   MultisigThresholdPubkey,
   Pubkey,
   pubkeyType,
@@ -53,6 +54,16 @@ export function encodeEd25519Pubkey(pubkey: Uint8Array): Ed25519Pubkey {
   }
   return {
     type: pubkeyType.ed25519,
+    value: toBase64(pubkey),
+  };
+}
+
+export function encodeEdbls12377Pubkey(pubkey: Uint8Array): EdBls12377Pubkey {
+  if (pubkey.length !== 32) {
+    throw new Error("Edbls12377 public key must be 32 bytes long");
+  }
+  return {
+    type: pubkeyType.edbls12377,
     value: toBase64(pubkey),
   };
 }

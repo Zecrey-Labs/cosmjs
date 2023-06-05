@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/ledger-amino",
-  "version": "0.30.12",
+  "version": "0.30.16",
   "description": "A library for signing Amino-encoded transactions using Ledger devices",
   "contributors": [
     "Will Clark <willclarktech@users.noreply.github.com>"

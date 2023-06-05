@@ -3,7 +3,7 @@ export {
   pubkeyToRawAddress,
   rawEd25519PubkeyToRawAddress,
   rawSecp256k1PubkeyToRawAddress,
-  rawBLS12377PubkeyToRawAddress,
+  rawEdbLS12377PubkeyToRawAddress,
 } from "./addresses";
 export {
   DateTime,
@@ -105,5 +105,5 @@ export {
   ValidatorEd25519Pubkey,
   ValidatorPubkey,
   ValidatorSecp256k1Pubkey,
-  ValidatorBls12377PubKey,
+  ValidatorEdbls12377Pubkey,
 } from "./types";

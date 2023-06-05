@@ -1,6 +1,6 @@
 {
   "name": "@zkkontos/tendermint-rpc",
-  "version": "0.30.12",
+  "version": "0.30.16",
   "description": "Tendermint RPC clients",
   "contributors": [
     "IOV SAS <admin@iov.one>",
