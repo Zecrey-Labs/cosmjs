@@ -187,7 +187,7 @@ export class SigningStargateClient extends StargateClient {
     if (!accountFromSigner) {
       throw new Error("Failed to retrieve account from signer");
     }
-    const pubkey = encodeSecp256k1Pubkey(accountFromSigner.pubkey);
+    const pubkey = encodeSecp256r1Pubkey(accountFromSigner.pubkey);
     const {sequence} = await this.getSequence(signerAddress);
     const {gasInfo} = await this.forceGetQueryClient().tx.simulate(anyMsgs, memo, pubkey, sequence);
     assertDefined(gasInfo);
